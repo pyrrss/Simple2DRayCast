@@ -29,17 +29,6 @@ class Ray{
 
         }
 
-        void renderInterSectPoint(SDL_Renderer *renderer, std::vector<float> intersectPoint){
-            SDL_Rect pointRect;
-            pointRect.x = intersectPoint[0] - 20 / 2;  
-            pointRect.y = intersectPoint[1] - 20 / 2;  
-            pointRect.w = 20;          
-            pointRect.h = 20;          
-
-            SDL_SetRenderDrawColor(renderer, 255, 0, 0, 0);  
-            SDL_RenderFillRect(renderer, &pointRect);  
-        }
-
         std::vector<float> cast(Obstacle wall){
             std::vector<float> intersectPoint;
 
