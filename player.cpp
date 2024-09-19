@@ -9,28 +9,19 @@ class Player{
     public:
         std::vector<float> pos;
         std::vector<Ray> rays;
+        const int PLAYER_VEL = 100;
+        float direction = 0;
 
         Player(std::vector<float> pos){
             this->pos = pos;
             
-            for(int i = 0;i < 360;i++)
+            for(int i = 0;i < 45;i++)
             {
-                Ray ray = Ray(pos, i);
+                Ray ray = Ray(pos, direction + i);
                 rays.push_back(ray);
             }
         
 
-        }
-
-        void setPos(float x, float y){
-            pos[0] = x;
-            pos[1] = y;
-
-            for(Ray &ray : rays)
-            {
-                ray.pos[0] = pos[0];
-                ray.pos[1] = pos[1];
-            }
         }
 
         void lookWalls(std::vector<Obstacle> walls, SDL_Renderer *renderer){
@@ -44,7 +35,7 @@ class Player{
                 {
 
                     std::vector<float> intersectPoint = ray.cast(wall);
-                    if(intersectPoint.size() > 0)
+                    if(!intersectPoint.empty())
                     {   
                         float x1 = ray.pos[0];
                         float y1 = ray.pos[1];
@@ -74,10 +65,53 @@ class Player{
 
         void render(SDL_Renderer *renderer){
 
+
             for(Ray ray : rays)
             {
                 ray.render(renderer);
+            }
 
+        }
+
+        void setKeyPos(float deltaTime){
+            
+            const Uint8* keystate = SDL_GetKeyboardState(NULL);
+
+            if (keystate[SDL_SCANCODE_A])
+            {
+                pos[0] -= PLAYER_VEL * deltaTime;
+            }
+
+            if (keystate[SDL_SCANCODE_D])
+            {
+                pos[0] += PLAYER_VEL * deltaTime;
+            }
+
+            if (keystate[SDL_SCANCODE_W]) 
+            {
+                pos[1] -= PLAYER_VEL * deltaTime;
+            }
+
+            if (keystate[SDL_SCANCODE_S]) 
+            {
+                pos[1] += PLAYER_VEL * deltaTime;
+            }
+
+            if(keystate[SDL_SCANCODE_LEFT])
+            {
+                direction -= 0.1;
+            }
+
+            if(keystate[SDL_SCANCODE_RIGHT])
+            {
+                direction += 0.1;
+            }
+
+            for (int i = 0; i < rays.size(); ++i) {
+                rays[i].pos[0] = pos[0];
+                rays[i].pos[1] = pos[1];
+                rays[i].dir = {std::cos((direction + i - 22) * M_PI / 180.0), 
+                               std::sin((direction + i - 22) * M_PI / 180.0)};
             }
 
         }

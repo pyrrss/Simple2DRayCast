@@ -7,7 +7,7 @@
 class Ray{
     public:
         std::vector<float> pos;
-        std::vector<float> dir;
+        std::vector<double> dir;
         Ray(std::vector<float> pos, int angle){
             
             this->pos = pos;
@@ -20,8 +20,8 @@ class Ray{
 
         void render(SDL_Renderer *renderer){
 
-            int endX = pos[0] + dir[0];
-            int endY = pos[1] + dir[1];
+            int endX = pos[0] + dir[0] * 10;
+            int endY = pos[1] + dir[1] * 10;
 
 
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);

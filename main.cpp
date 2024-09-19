@@ -38,9 +38,15 @@ int main(){
     }
 
     float mouseX, mouseY;
+    float currentTime;
+    float deltaTime;
+    float lastTime = 0; 
     while(isRunning)
     {
-
+        currentTime = SDL_GetTicks();
+        deltaTime = (currentTime - lastTime) / 1000.0f;
+        lastTime = currentTime;
+    
         SDL_Event event;
         while(SDL_PollEvent( &event ))
         {
@@ -54,6 +60,21 @@ int main(){
                 mouseX = event.motion.x;
                 mouseY = event.motion.y;
             }
+
+            if(event.type == SDL_KEYDOWN)
+            {
+                switch(event.key.keysym.sym)
+                {
+                    case SDLK_m:
+                        Obstacle wall = Obstacle(rand()%1280, rand()%720, rand()%1280, rand()%720);
+                        walls.push_back(wall);
+                        break;
+                }
+                
+            }
+            
+            
+            
         }
 
         SDL_SetRenderDrawColor(renderer, 154, 15, 162, 255);
@@ -63,20 +84,22 @@ int main(){
         {
             wall.render(renderer);
         }
+
+        
         player.render(renderer);
-        player.setPos(mouseX, mouseY);
+        // player.setMousePos(mouseX, mouseY);
         player.lookWalls(walls, renderer);
-        
-        
-
-
-
-
+        player.setKeyPos(deltaTime);
         SDL_RenderPresent(renderer);
+
+        
+        
+        
+        
+        
+
+    
     }
-
-
-
 
 
 
