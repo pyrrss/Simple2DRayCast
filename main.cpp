@@ -73,8 +73,6 @@ int main(){
                 
             }
             
-            
-            
         }
 
         SDL_SetRenderDrawColor(renderer, 154, 15, 162, 255);
@@ -86,19 +84,12 @@ int main(){
         }
 
         
-        player.render(renderer);
         // player.setMousePos(mouseX, mouseY);
         player.lookWalls(walls, renderer);
         player.setKeyPos(deltaTime);
         SDL_RenderPresent(renderer);
 
-        
-        
-        
-        
-        
 
-    
     }
 
 

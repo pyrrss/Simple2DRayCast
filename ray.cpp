@@ -8,6 +8,7 @@ class Ray{
     public:
         std::vector<float> pos;
         std::vector<double> dir;
+        
         Ray(std::vector<float> pos, int angle){
             
             this->pos = pos;
@@ -18,14 +19,28 @@ class Ray{
             dir.push_back(std::sin(radians));
         }   
 
-        void render(SDL_Renderer *renderer){
+        void render(SDL_Renderer *renderer, const int MAX_DISTANCE_VIEW, std::vector<float> closestIntersectPoint){
 
-            int endX = pos[0] + dir[0] * 10;
-            int endY = pos[1] + dir[1] * 10;
+            int endX;
+            int endY;
 
+            if(!closestIntersectPoint.empty()){
+                
+                endX = closestIntersectPoint[0];
+                endY = closestIntersectPoint[1];    
 
-            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+            } else {
+                
+                endX = pos[0] + dir[0] * MAX_DISTANCE_VIEW;
+                endY = pos[1] + dir[1] * MAX_DISTANCE_VIEW;    
+            }
+
+            float distance = std::sqrt((endX - pos[0]) * (endX - pos[0]) + (endY - pos[1]) * (endY - pos[1]));
+            float alpha = 255 * distance / MAX_DISTANCE_VIEW;
+
+            SDL_SetRenderDrawColor(renderer, 255, 255, 255, alpha);
             SDL_RenderDrawLine(renderer, pos[0], pos[1], endX, endY);
+            
 
         }
 
