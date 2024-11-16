@@ -13,10 +13,8 @@ class Ray{
             
             this->pos = pos;
 
-            float radians = angle * M_PI / 180;
-
-            dir.push_back(std::cos(radians));
-            dir.push_back(std::sin(radians));
+            dir.push_back(std::cos(angle * M_PI / 180));
+            dir.push_back(std::sin(angle * M_PI / 180));
         }   
 
         void render(SDL_Renderer *renderer, const int MAX_DISTANCE_VIEW, std::vector<float> closestIntersectPoint){

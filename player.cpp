@@ -74,13 +74,13 @@ class Player{
             if (keystate[SDL_SCANCODE_A])
             {
                 // pos[0] -= PLAYER_VEL * deltaTime;
-                direction -= 0.05;
+                direction -= 0.07;
             }
 
             if (keystate[SDL_SCANCODE_D])
             {
                 // pos[0] += PLAYER_VEL * deltaTime;
-                direction += 0.05;
+                direction += 0.07;
             }
 
             if (keystate[SDL_SCANCODE_W]) 
